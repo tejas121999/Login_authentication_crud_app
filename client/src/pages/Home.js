@@ -4,10 +4,9 @@ import { logoutUserAction } from '../redux/Action/authAction';
 
 
 const Home = () => {
-
+  // logout user
   const { currentUser } = useSelector((state) => state.user)
   const dispatch = useDispatch();
-
   const handleLogout = () => {
     if (currentUser) {
       dispatch(logoutUserAction())
