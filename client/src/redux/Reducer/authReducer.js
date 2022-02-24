@@ -1,4 +1,3 @@
-import { LOGIN_USER, REGISTER_USER } from "../constType"
 import * as types from '../constType'
 
 const initialState = {

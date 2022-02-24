@@ -10,7 +10,7 @@ const Register = () => {
     password: ""
   })
 
-  const [error, setError] = useState()
+  const [error, setError] = useState('')
 
   const { email, password, name } = state;
 
@@ -34,14 +34,12 @@ const Register = () => {
     if (!password) {
       setError('please enter password')
     }
-    if (password !== password) {
-      setError('password is not match')
-    }
+
     if (!name) {
       setError('please enter password')
     }
     else {
-      dispatch(registerUserAction())
+      dispatch(registerUserAction(email, name, password))
       setState({ email: '', name: '', password: '' })
       setError('')
     }
@@ -52,8 +50,10 @@ const Register = () => {
   }
   return (
     <div className='container mt-5'>
-      {error && <h3 style={{ color: 'red' }}>{error}</h3>}
-      <form onSubmit={handleSubmit}>
+      {error && <h3 style={{ color: 'red' }}>{error}</h3>} 
+      <form
+      onSubmit={handleSubmit}
+      >
         <div className="form-group">
           <label for="exampleInputName">Name</label>
           <input

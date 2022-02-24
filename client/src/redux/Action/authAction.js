@@ -18,24 +18,16 @@ const registerFail = (error) => ({
 export const registerUserAction = (email, name, password) => {
     return dispatch => {
         dispatch(registerAction());
-        auth.createUser(email, password, name)
+        auth.createUserWithEmailAndPassword(email, password)
             .then(({ user }) => {
+                user.updateProfile({
+                    name
+                })
                 dispatch(registerSuccess(user))
             })
-            .catch((error) => dispatch(registerFail(error.message)))
+            .catch((error) =>
+                dispatch(registerFail(error))
+            )
     }
 }
 
-const loginUserAction = () => ({
-    type: types.LOGIN_USER
-})
-
-const loginUserSuccess = (user) => ({
-    type: types.LOGIN_USER_SUCCESS,
-    payload: user
-})
-
-const loginUserFail = (error) => ({
-    type: types.LOGIN_USER_FAIL,
-    payload: error
-})

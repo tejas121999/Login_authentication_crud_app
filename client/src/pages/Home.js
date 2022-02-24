@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div>
       Home
-      <button type="submit" className="btn btn-block btn-secondery">Login</button>
+      <button type="submit" className="btn btn-block btn-secondery">Log-out</button>
     </div>
   )
 }
