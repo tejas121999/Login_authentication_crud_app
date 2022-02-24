@@ -5,7 +5,7 @@ import LoadingToRedirect from './LoadingToRedirect'
 
 const UserRoute = ({ children, ...rest }) => {
     const { currentUser } = useSelector((state) => state.user)
-    return currentUser ? <Route {...rest} />: <LoadingToRedirect/>
+    return currentUser ? <Route {...rest} />: <LoadingToRedirect/> 
 }
 
 export default UserRoute

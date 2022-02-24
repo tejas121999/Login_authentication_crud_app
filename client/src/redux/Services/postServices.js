@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from '../utils/apiEndpoint'
+import { BASE_URL } from '../../utils/utils'
 
 function userServices() {
     // get all user

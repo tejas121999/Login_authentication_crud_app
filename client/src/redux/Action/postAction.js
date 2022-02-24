@@ -1,12 +1,12 @@
-import { toast } from "react-toastify";
-import { ADD_USER, DELETE_USER, GET_USER, GET_USER_BY_ID, UPDATE_USER } from "./constType";
-import userServices from "./userServices";
+import { ADD_USER, DELETE_USER, GET_USER, GET_USER_BY_ID, UPDATE_USER } from "../constType";
+import userServices from "../Services/postServices";
 
 // get user
 export const getAllUserAction = () => {
     return dispatch => {
         userServices.getUser()
             .then(res => {
+                // console.log("res", res)
                 dispatch(getAllUser(res.data));
             })
             .catch(err => {
@@ -27,10 +27,7 @@ export const deleteUserAction = (id) => {
     return dispatch => {
         userServices.deleteUser(id)
             .then(res => {
-                toast.warning(res.data.message, {
-                    position: 'top-center',
-                    autoClose: 2000
-                })
+
                 // console.log(res)
                 dispatch(deleteUser())
                 dispatch(getAllUserAction())
@@ -48,13 +45,13 @@ export const deleteUser = () => {
 }
 
 // create user
-export const addUserAction = (user, navigate) => {
+export const addUserAction = (user, history) => {
     return dispatch => {
         userServices.addUser(user)
             .then(res => {
                 console.log(res)
                 dispatch(addUser())
-                navigate('#')
+                history.push('/')
             })
             .catch(err => {
                 // window.history.back()
@@ -90,13 +87,13 @@ export const getUserById = (user) => {
 }
 
 // update user by id
-export const updateUserByIDAction = (user, id, navigate) => {
+export const updateUserByIDAction = (user, id, history) => {
     return dispatch => {
         userServices.updateUser(id, user)
             .then(res => {
                 console.log(res)
                 dispatch(updateUserByID())
-                navigate('/')
+                history.push('/')
             })
             .catch(err => {
                 // window.history.back()
