@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, Link } from 'react-router-dom'
+import { loginUserAction } from '../redux/Action/authAction'
 
 const Login = () => {
   const [state, setState] = useState({
@@ -12,6 +13,18 @@ const Login = () => {
 
   const { email, password } = state
 
+  const { currentUser } = useSelector((state) => state.user)
+  console.log(currentUser)
+
+  const history = useHistory();
+  useEffect(() => {
+    if (currentUser) {
+      history.push('/')
+    }
+  }, [currentUser, history])
+
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) {
@@ -21,12 +34,14 @@ const Login = () => {
       setError('please enter password')
     }
     else {
-
+      dispatch(loginUserAction(email, password))
+      setState({ email: '', password: '' })
       setError('')
     }
   }
   const handleChange = (e) => {
-    setState({ ...state, [e.target.value]: e.target.name })
+    let { name, value } = e.target;
+    setState({ ...state, [name]: value })
   }
   return (
     <div className='container mt-5'>

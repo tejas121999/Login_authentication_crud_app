@@ -1,0 +1,19 @@
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+
+const LoadingToRedirect = () => {
+    const [count, setCount] = useState(5)
+    const history = useHistory();
+    useEffect(() => {
+        const intervel = setInterval(() => {
+            setCount((currentCount) => --currentCount);
+        }, 1000);
+        count === 0 && history.push('/login');
+        return () => clearInterval(intervel)
+    }, [count, history])
+    return (
+        <div>Redirect in {count} second</div>
+    )
+}
+
+export default LoadingToRedirect

@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUserAction } from '../redux/Action/authAction';
+
 
 const Home = () => {
+
+  const { currentUser } = useSelector((state) => state.user)
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    if (currentUser) {
+      dispatch(logoutUserAction())
+    }
+  }
+
   return (
     <div>
       Home
-      <button type="submit" className="btn btn-block btn-secondery">Log-out</button>
+      <button type="submit" className="btn btn-block btn-secondery" onClick={handleLogout}>Log-out</button>
     </div>
   )
 }
