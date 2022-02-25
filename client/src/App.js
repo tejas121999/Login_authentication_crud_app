@@ -6,7 +6,6 @@ import Register from './pages/Register'
 import UserRoute from './components/UserRoute';
 import { ToastContainer } from 'react-toastify';
 import AddUser from './pages/AddUser';
-import GetUserById from './pages/GetUserById';
 import UpdateUser from './pages/UpdateUser';
 
 
@@ -19,9 +18,8 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <UserRoute exact path='/' component={Home} />
-          <Route exact path='/addUser' component={AddUser} />
-          <Route exact path='/getUserByID/:id' component={GetUserById} />
-          <Route exact path='/updateUser/:id' component={UpdateUser} />
+          <UserRoute path='/addUser' component={AddUser} />
+          <UserRoute path='/updateUser/:id' component={UpdateUser} />
         </Switch>
       </Router>
     </>

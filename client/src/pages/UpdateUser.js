@@ -37,6 +37,7 @@ export default function EditUser(props) {
     let dispatch = useDispatch();
 
     const { user } = useSelector(state => state.data)
+    console.log("update", user)
 
     const [state, setState] = useState({
         name: '',

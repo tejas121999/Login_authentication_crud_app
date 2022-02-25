@@ -75,7 +75,7 @@ export const getUserByIdAction = (id) => {
                 dispatch(getUserById(res.data))
             })
             .catch(err => {
-                // window.history.back()
+                
             })
     }
 }
