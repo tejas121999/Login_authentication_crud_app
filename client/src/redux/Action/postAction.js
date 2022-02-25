@@ -23,9 +23,9 @@ export const getAllUser = (users) => {
 }
 
 // delete user
-export const deleteUserAction = (id) => {
+export const deleteUserAction = (_id) => {
     return dispatch => {
-        userServices.deleteUser(id)
+        userServices.deleteUser(_id)
             .then(res => {
 
                 // console.log(res)
@@ -51,10 +51,11 @@ export const addUserAction = (user, history) => {
             .then(res => {
                 console.log(res)
                 dispatch(addUser())
-                history.push('/')
+                history.push('#')
             })
             .catch(err => {
-                // window.history.back()
+                // console.log(err)
+                alert(err)
             })
     }
 }

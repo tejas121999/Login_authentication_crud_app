@@ -1,165 +1,143 @@
-import React from 'react';
-import { Field, Form, Formik } from 'formik';
-import * as yup from 'yup';
+import React, { useEffect, useState } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import { useDispatch } from 'react-redux';
 import { addUserAction } from '../redux/Action/postAction';
+import { Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 
-const Adduser = (props) => {
 
-    const dispatch = useDispatch();
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
-    const validationSchema = yup.object({
-        fname: yup
-            .string()
-            .required('Required'),
-        lname: yup
-            .string()
-            .required('Required'),
-        email: yup
-            .string()
-            .required('Required')
-            .email('Invalid Email Format'),
-        state: yup
-            .string()
-            .required('Required'),
-        city: yup
-            .string()
-            .required('Required'),
-        pincode: yup
-            .string()
-            .required('Required')
-            .max(5, 'max limite is 5 only'),
+export default function AddUser(props) {
+    let history = useHistory()
+    const classes = useStyles();
+    let dispatch = useDispatch();
+    const [user, setUsers] = useState({
+        name: '',
+        street: '',
+        email: '',
+        phone: ''
     })
 
-    const onUserAdd = values => {
-        const object = {
-            fname: values.fname,
-            lname: values.lname,
-            email: values.email,
-            state: values.state,
-            city: values.city,
-            pincode: values.pincode
-        }
-        dispatch(addUserAction(object, props.history))
+    const [error, setError] = useState('')
+
+    const { name, street, email, phone } = user;
+
+    const onInputChange = e => {
+        setUsers({ ...user, [e.target.name]: e.target.value });
     }
 
 
+
+    const handleSubmait = (e) => {
+
+        e.preventDefault();
+        if (!name || !street || !email || !phone) {
+            setError('please input all the field')
+        } else {
+            dispatch(addUserAction(user, history))
+
+            setError('')
+        }
+    }
+
     return (
-        <div className="container-fluid">
-            <Formik
-                initialValues={{
-                    fname: '',
-                    lname: '',
-                    email: '',
-                    state: '',
-                    city: '',
-                    pincode: ''
-                }}
-                validationSchema={validationSchema}
-                onSubmit={values => onUserAdd(values)}
-            >
-                {({ values, errors, touched }) => (
-                    <Form>
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>First Name</label>
-                            <Field
-                                type="text"
-                                name="fname"
-                                placeholder="fisrt name"
-                                className="form-control"
-                                value={values.fname}
-                            />
-                            {errors.fname && touched.fname && (
-                                <div className="text-left">
-                                    <span style={{ color: 'red' }}>{errors.fname}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>Last Name</label>
-                            <Field
-                                type="text"
-                                name="lname"
-                                placeholder="last name"
-                                className="form-control"
-                                value={values.lname}
-                            />
-                            {errors.lname && touched.lname && (
-                                <div className="text-left">
-                                    <span style={{ color: 'red' }}>{errors.lname}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>Email</label>
-                            <Field
-                                type="text"
-                                name="email"
-                                placeholder="email"
-                                className="form-control"
-                                value={values.email}
-                            />
-                            {errors.email && touched.email && (
-                                <div className="text-left">
-                                    <span style={{ color: 'red' }}>{errors.email}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>State</label>
-                            <Field
-                                type="text"
-                                name="state"
-                                placeholder="State"
-                                className="form-control"
-                                value={values.state}
-                            />
-                            {errors.state && touched.state && (
-                                <div className="text-left">
-                                    <span style={{ color: 'red' }}>{errors.state}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>City</label>
-                            <Field
-                                type="text"
-                                name="city"
-                                placeholder="City"
-                                className="form-control"
-                                value={values.city}
-                            />
-                            {errors.city && touched.city && (
-                                <div className="text-left">
-                                    <span style={{ color: 'red' }}>{errors.city}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>Pincode</label>
-                            <Field
-                                type="text"
-                                name="pincode"
-                                placeholder="Pincode"
-                                className="form-control"
-                                value={values.pincode}
-                            />
-                            {errors.pincode && touched.pincode && (
-                                <div className="text-left">
-                                    <span style={{ color: 'red' }}>{errors.pincode}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </div>
-                    </Form>
-                )}
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Typography component="h1" variant="h5">
+                    Add user
+                </Typography>
+                {error && <h3 style={{ color: 'red' }}>{error}</h3>}
+                <form className={classes.form} noValidate onSubmit={handleSubmait}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Name"
+                        name='name'
+                        value={name}
+                        autoComplete="name"
+                        autoFocus
+                        onChange={onInputChange}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name='street'
+                        value={street}
+                        label="Address"
+                        type="street"
+                        id="street"
+                        autoComplete="current-street"
+                        onChange={onInputChange}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name='email'
+                        value={email}
+                        label="Email"
+                        type="email"
+                        id="email"
+                        autoComplete="current-street"
+                        onChange={onInputChange}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name='phone'
+                        value={phone}
+                        label="Contact"
+                        type="phone"
+                        id="phone"
+                        autoComplete="current-phone"
+                        onChange={onInputChange}
+                    />
 
-            </Formik>
-        </div>
-    )
-};
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Add user
+                    </Button>
+                </form>
+            </div>
 
-export default Adduser;
+        </Container>
+    );
+}

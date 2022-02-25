@@ -14,12 +14,11 @@ router.route('/').get((req, res) => {
 // add user
 router.route('/add').post((req, res) => {
     const name = req.body.name;
-    const username = req.body.username;
     const phone = req.body.phone;
     const email = req.body.email;
     const street = req.body.street;
 
-    const newUser = new Post({ name, username, phone, email, street })
+    const newUser = new Post({ name, phone, email, street })
     newUser.save()
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error:' + err))
@@ -37,7 +36,6 @@ router.route('/update/:id').put((req, res) => {
     const posts = new Post({
         _id: req.params.id,
         name: req.body.name,
-        username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
         street: req.body.street,

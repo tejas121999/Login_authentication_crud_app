@@ -7,16 +7,16 @@ const DeleteModal = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const id = props.id;
-        dispatch(getUserByIdAction(id))
+        const _id = props._id;
+        dispatch(getUserByIdAction(_id))
     }, [])
 
     const users = useSelector(state => state.data.user)
     // console.log('user', users)
 
     const onDelete = () => {
-        const id = props.id;
-        dispatch(deleteUserAction(id))
+        const _id = props._id;
+        dispatch(deleteUserAction(_id))
         props.onHide();
     }
     return (

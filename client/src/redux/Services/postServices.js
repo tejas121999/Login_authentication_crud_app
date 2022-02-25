@@ -6,16 +6,16 @@ function userServices() {
     this.getUser = async () => await axios.get(BASE_URL + '/')
 
     // delete user
-    this.deleteUser = async id => await axios.delete(BASE_URL + `/delete/${id}`)
+    this.deleteUser = async _id => await axios.delete(BASE_URL + `/delete/${_id}`)
 
     // create user
     this.addUser = async user => await axios.post(BASE_URL + '/add', user)
 
     // get user by id 
-    this.getUserById = async (id) => await axios.get(BASE_URL + `/detail/${id}`)
+    this.getUserById = async (_id) => await axios.get(BASE_URL + `/detail/${_id}`)
 
     // update user by id
-    this.updateUser = async (id, user) => await axios.put(BASE_URL + `/update/${id}`, user)
+    this.updateUser = async (_id, user) => await axios.put(BASE_URL + `/update/${_id}`, user)
 }
 
 export default new userServices();
